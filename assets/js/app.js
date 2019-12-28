@@ -14,6 +14,9 @@ function eventListener(e) {
 
 function addTweet(e) {
   e.preventDefault();
-  console.info(e);
-  console.info("Form is submitted");
+  const tweet = document.querySelector("#tweet").value;
+  const li = document.createElement("li");
+  li.innerText = tweet;
+  twitslist.appendChild(li);
+  document.querySelector("#tweet").value = "";
 }
