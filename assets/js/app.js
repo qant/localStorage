@@ -22,8 +22,6 @@ function addTweet(e) {
 
 function removeTweet(e) {
   e.preventDefault();
-  console.log(e.target.parentElement);
-  console.log(e.target.classList.value);
   if (e.target.className === "borrar-tweet") {
     let tweet_tmp,
       tweetDel = "";
@@ -48,8 +46,6 @@ function removeTweetFromLS(tweet) {
     console.log(tweet);
     if (element === tweet) {
       tweets.splice(i, 1);
-      console.log(i);
-      console.log("Removed");
     }
   });
   localStorage.setItem("tweets", JSON.stringify(tweets));
