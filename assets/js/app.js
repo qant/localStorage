@@ -1,6 +1,7 @@
 const twitslist = document.getElementById("twitslist");
 
 console.log(twitslist);
+document.addEventListener("DOMContentLoaded", showTweetsFromLS);
 
 //Events
 eventListener();
@@ -16,16 +17,9 @@ function eventListener(e) {
 function addTweet(e) {
   e.preventDefault();
   const tweet = document.querySelector("#tweet").value;
-  const removeBtn = document.createElement("a");
-  removeBtn.classList = "borrar-tweet";
-  removeBtn.innerText = "X";
-
-  const li = document.createElement("li");
-  li.innerText = tweet;
-
-  twitslist.appendChild(li);
-  li.appendChild(removeBtn);
+  showTweet(tweet);
   document.querySelector("#tweet").value = "";
+  addTweetToLS(tweet);
 }
 
 function removeTweet(e) {
@@ -35,6 +29,48 @@ function removeTweet(e) {
     console.log(e.target.classList.value);*/
   if (e.target.className === "borrar-tweet") {
     //console.log("Removing!");
+    removeTweetFromLS(tweet);
     e.target.parentElement.remove();
   }
+}
+
+function addTweetToLS(tweet) {
+  let tweets = getTweetsFromLS();
+  tweets.push(tweet);
+  localStorage.setItem("tweets", JSON.stringify(tweets));
+}
+
+function removeTweetFromLS(tweet) {}
+
+function getTweetsFromLS() {
+  let tweets;
+  if (localStorage.getItem("tweets") === null) {
+    tweets = [];
+  } else {
+    tweets = JSON.parse(localStorage.getItem("tweets"));
+  }
+  return tweets;
+}
+
+function showTweetsFromLS() {
+  tweets = getTweetsFromLS();
+  console.log(tweets);
+  if (tweets.lenght != 0) {
+    tweets.forEach(element => {
+      showTweet(element);
+    });
+  }
+}
+
+function showTweet(element) {
+  const tweet = element;
+  const removeBtn = document.createElement("a");
+  removeBtn.classList = "borrar-tweet";
+  removeBtn.innerText = "X";
+
+  const li = document.createElement("li");
+  li.innerText = tweet;
+
+  twitslist.appendChild(li);
+  li.appendChild(removeBtn);
 }
